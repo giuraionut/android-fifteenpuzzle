@@ -2,6 +2,7 @@ package com.fifteenpuzzle
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -17,6 +18,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
     private lateinit var binding: MainActivityBinding
     private var matrixSize = 4
     private var buttonSize = 300
+    private var tableOffsetX = 125;
+    private var tableOffsetY = 400;
     private var buttons = mutableListOf<Button>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
         val view = binding.root
         setContentView(view)
 
+        initGame()
+
+    }
+
+    private fun initGame() {
         val l1 = IntStream.range(0, matrixSize).toList().toMutableList()
         val l2 = IntStream.range(0, matrixSize).toList().toMutableList()
         shuffle(l1)
@@ -35,22 +43,24 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                 binding.container.addView(button)
             }
         }
-
     }
 
     private fun moveButton(currentButton: Button) {
-//        Log.i("Current Pos", "x: ${currentButton.x}  y: ${currentButton.y}")
+        Log.i("Current Pos", "x: ${currentButton.x}  y: ${currentButton.y}")
         val neighbours =
-            Position(currentButton.x / buttonSize, currentButton.y / buttonSize).neighbours(
+            Position(
+                (currentButton.x - tableOffsetX) / buttonSize,
+                (currentButton.y - tableOffsetY) / buttonSize
+            ).neighbours(
                 matrixSize
             )
 
         val button = binding.container.findViewWithTag<Button>("target")
-        val x = button.x / buttonSize
-        val y = button.y / buttonSize
+        val x = (button.x - tableOffsetX) / buttonSize
+        val y = (button.y - tableOffsetY) / buttonSize
         if (neighbours.contains(Position(x, y))) {
-//            Log.i("Move", "valid")
-//            Log.i("Next Pos", "x: ${button.x}  y: ${button.y}")
+            Log.i("Move", "valid")
+            Log.i("Next Pos", "x: ${button.x}  y: ${button.y}")
 
             val nextPC = Position(currentButton.x, currentButton.y) - Position(button.x, button.y)
             val nextPN = Position(button.x, button.y) - Position(currentButton.x, currentButton.y)
@@ -62,12 +72,11 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
             button.translationY = button.y + nextPN.y
 
         } else {
-//            Log.i("Move", "invalid")
+            Log.i("Move", "invalid")
         }
         if (check()) {
             Toast.makeText(this, "Congratulations", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun check(): Boolean {
@@ -91,8 +100,8 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun createButton(x: Float, y: Float): Button {
         val button = Button(this)
-        button.x = x * buttonSize
-        button.y = y * buttonSize
+        button.x = x * buttonSize + tableOffsetX
+        button.y = y * buttonSize + tableOffsetY
         button.width = buttonSize
         button.height = buttonSize
         button.id = View.generateViewId()
