@@ -3,6 +3,7 @@
 
 * Game needs some styling. Currently it works but it looks basic.
 
+[Image](https://github.com/giuraionut/android-fifteenpuzzle/blob/main/presentation/img.png)
 
 ### Details
 
