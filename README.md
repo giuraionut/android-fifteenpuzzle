@@ -13,10 +13,10 @@
 * When a player clicks a button, we check:
     * All it's neighbours on 4 directions: `North, South, East and West`.
      * On a matrix those positions would be:
-      *  x + (1,0)
-      *  x - (0,1)
-      *  y + (1,0)
-      *  y - (0,1)
+        * x + (1,0)
+        * x - (0,1)
+        * y + (1,0)
+        * y - (0,1)
     * We ignore those who go out of bounds ( bigger than matrix size or negative values )
     * If we find a neighbour that has `no text` this is our empty button, and the current button will switch places with it.
 * All buttons positions are saved in a `List` so we can check if they are in order. If the list is sorted, the game is over.
