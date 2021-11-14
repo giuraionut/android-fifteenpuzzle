@@ -1,4 +1,9 @@
 # Fifteen Puzzle game
+<p align = "center">
+<img src = "https://img.shields.io/badge/KOTLIN-purple">
+<img src = "https://img.shields.io/badge/ANDROID STUDIO-green">
+</p>
+
 ## Fifteen Puzzle made with Android Studio and Kotlin
 
 * Game needs some styling. Currently it works but it looks basic.
